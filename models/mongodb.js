@@ -8,11 +8,10 @@ mongoose.connect(mongoURI, {
   useUnifiedTopology: true,
 });
 
+mongoose.set('autoIndex', false);
+
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-db.once('open', () => {
-  console.log('connection open');
-});
 
-module.exports = db
+module.exports = db;
