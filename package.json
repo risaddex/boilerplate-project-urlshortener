@@ -1,8 +1,11 @@
 {
   "name": "shorturl",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "API project for freeCodeCamp",
   "main": "server.js",
+  "engines": {
+    "node": "14.15.4"
+  },
   "scripts": {
     "start": "node server.js",
     "dev": "DEBUG=express:* nodemon server.js"
@@ -17,5 +20,6 @@
   "devDependencies": {
     "@types/mongoose": "^5.10.3",
     "nodemon": "^2.0.4"
-  }
+  },
+  "private": "true"
 }
