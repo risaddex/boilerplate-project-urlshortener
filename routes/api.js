@@ -3,6 +3,7 @@ const {
   listUrls,
   deleteAllUrls,
   createAndSaveUrl,
+  redirectByUrlId,
 } = require('../controllers/urlsController');
 const router = express.Router();
 // API ROUTES
@@ -15,29 +16,22 @@ router.get('/urls', ({ res, next }) => {
 router.delete('/urls', (req, res, next) => {
   deleteAllUrls(req, res, next);
 });
-// post new URL
-router.post('/urls', (req, res, next) => {
-  createAndSaveUrl(req, res, next);
-});
 
 // Usa um regexp para aceitar apenas redirects baseados em números
-router.get('/shorturl/:id(\\d+)', (req, res, next) => {
-  res.redirect('/');
+router.get('/shorturl/:id(\\d+)', async (req, res) => {
+  redirectByUrlId(req, res);
 });
 
 // todo: Gerar um número e armazenar o endpoint p/ fazer o redirect
-router.post('/shorturl/new', (req, res) => {
+router.post('/shorturl/new', (req, res, next) => {
   console.log(req.body);
-  // devolve a url
-  res.json({
-    original_url: req.body.url,
-  });
+  // post new URL
+  createAndSaveUrl(req, res, next);
 });
 
 // Your first API endpoint
 router.get('/hello', function (req, res) {
   res.json({ greeting: 'hello API' });
 });
-
 
 module.exports = router;

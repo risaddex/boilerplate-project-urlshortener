@@ -7,6 +7,7 @@ const UrlSchema = new Schema({
   original_url: {
     type: String,
     required: true,
+    match: /^(https?:\/\/)/,
   },
   short_url: {
     type: Number,
@@ -16,7 +17,7 @@ const UrlSchema = new Schema({
 // Validation
 UrlSchema.pre('save', async function () {
   //? FCC's base demo did'nt allowed 0 index so... ¯\_(ツ)_/¯
-  const currentIndex = (await this.collection.count({})) + 1;
+  const currentIndex = (await this.collection.countDocuments({})) + 1;
 
   this.set({ short_url: currentIndex });
 });
