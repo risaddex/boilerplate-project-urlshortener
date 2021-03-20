@@ -19,7 +19,7 @@ function createAndSaveUrl(req, res, next) {
     original_url: req.body.url,
   };
   // Insert Model into DB
-Url.create(url)
+  Url.create(url)
     .then(({ original_url, short_url, ...data }) => {
       console.log(data._doc);
       res.json({
@@ -28,7 +28,9 @@ Url.create(url)
       });
     })
     .catch((err) => {
-      next(err);
+      res.json({
+        error: 'invalid url',
+      });
     });
 }
 // removeAll(drop)
@@ -40,10 +42,10 @@ function deleteAllUrls(req, res, next) {
 async function redirectByUrlId(req, res) {
   await Url.findOne({ short_url: req.params.id })
     .then((data) => {
-      res.redirect(data.original_url)
+      res.redirect(data.original_url);
     })
     .catch((err) => {
-      return console.error(err)
+      return console.error(err);
     });
 }
 
